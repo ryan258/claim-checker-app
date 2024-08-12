@@ -13,11 +13,11 @@ class ResponseParser {
       let verdict = 'Uncertain';
       let confidence = 'Low';
   
-      if (lowercaseResponse.includes('true') || lowercaseResponse.includes('correct')) {
-        verdict = 'True';
-        confidence = lowercaseResponse.includes('certainly') || lowercaseResponse.includes('definitely') ? 'High' : 'Medium';
-      } else if (lowercaseResponse.includes('false') || lowercaseResponse.includes('incorrect')) {
+      if (lowercaseResponse.includes('false')) {
         verdict = 'False';
+        confidence = lowercaseResponse.includes('certainly') || lowercaseResponse.includes('definitely') ? 'High' : 'Medium';
+      } else if (lowercaseResponse.includes('true')) {
+        verdict = 'True';
         confidence = lowercaseResponse.includes('certainly') || lowercaseResponse.includes('definitely') ? 'High' : 'Medium';
       }
   

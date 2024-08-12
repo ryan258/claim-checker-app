@@ -12,7 +12,7 @@ router.post('/check-claim', async (req, res) => {
     }
 
     const aiResponse = await ollamaService.checkClaim(claim);
-    console.log('AI Response:', aiResponse); // Log the response for debugging
+    console.log('AI Response in api.js:', aiResponse);
     const parsedResponse = responseParser.parse(aiResponse);
 
     res.json(parsedResponse);

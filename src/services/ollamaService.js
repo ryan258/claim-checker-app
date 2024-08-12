@@ -8,8 +8,9 @@ class OllamaService {
 
   async checkClaim(claim) {
     try {
-      const prompt = `Please analyze the following claim and determine if it's true or false. Provide a brief explanation for your conclusion.\n\nClaim: "${claim}"`;
+      const prompt = `Please analyze the following claim and determine if it's true or false. Provide a brief explanation for your conclusion. Format your response using markdown, especially for lists and emphasis.\n\nClaim: "${claim}"`;
 
+      console.log('Sending request to Ollama API...');
       const response = await axios.post(this.apiUrl, {
         model: this.modelName,
         prompt: prompt
@@ -17,11 +18,15 @@ class OllamaService {
         responseType: 'stream'
       });
 
+      console.log('Received response from Ollama API');
+
       let fullResponse = '';
 
       return new Promise((resolve, reject) => {
         response.data.on('data', (chunk) => {
-          const lines = chunk.toString().split('\n').filter(line => line.trim() !== '');
+          const chunkStr = chunk.toString();
+        //   console.log('Received chunk:', chunkStr);
+          const lines = chunkStr.split('\n').filter(line => line.trim() !== '');
           for (const line of lines) {
             try {
               const parsedLine = JSON.parse(line);
@@ -35,10 +40,12 @@ class OllamaService {
         });
 
         response.data.on('end', () => {
+          console.log('Full response:', fullResponse);
           resolve(fullResponse.trim());
         });
 
         response.data.on('error', (err) => {
+          console.error('Error in stream:', err);
           reject(new Error('Error processing Ollama API stream: ' + err.message));
         });
       });
