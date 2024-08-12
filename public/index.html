@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Checker App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Claim Checker App</h1>
+    <form id="claimForm">
+        <label for="claim">Enter your claim:</label><br>
+        <textarea id="claim" name="claim" required></textarea><br>
+        <button type="submit">Check Claim</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('claimForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const claim = document.getElementById('claim').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Checking claim...';
+
+            try {
+                const response = await fetch('/api/check-claim', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ claim }),
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = `<h3>Result:</h3><p>${data.result}</p>`;
+            } catch (error) {
+                resultDiv.innerHTML = 'An error occurred while checking the claim.';
+            }
+        });
+    </script>
+</body>
+</html>
