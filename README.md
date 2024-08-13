@@ -17,6 +17,7 @@ This project is a Node.js-based application that uses a local Ollama AI (llama3.
 - [x] Develop claim processing logic
 - [x] Create response parsing and structuring module
 - [x] Implement basic error handling and logging
+- [x] Add result logging functionality
 
 ### 3. Frontend Development
 - [x] Design basic HTML structure for the app
@@ -50,6 +51,9 @@ This project is a Node.js-based application that uses a local Ollama AI (llama3.
 ```
 claim-checker-app/
 │
+├── logs/
+│   └── claim_checks.log
+│
 ├── public/
 │   └── index.html
 │
@@ -59,7 +63,8 @@ claim-checker-app/
 │   ├── services/
 │   │   └── ollamaService.js
 │   └── utils/
-│       └── responseParser.js
+│       ├── responseParser.js
+│       └── logger.js
 │
 ├── tests/
 │   ├── unit/
@@ -91,6 +96,7 @@ claim-checker-app/
 - Backend integration with local Ollama AI for claim verification
 - Markdown parsing of AI responses for formatted display
 - Basic error handling and logging
+- Result logging for each claim check
 
 ## Known Issues
 
@@ -102,11 +108,4 @@ claim-checker-app/
 - Implement more sophisticated AI response parsing
 - Add user authentication and claim history
 - Improve UI/UX with more interactive elements
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+- Implement log rotation and archiving for long-term use
